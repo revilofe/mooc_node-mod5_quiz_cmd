@@ -1,1 +1,4 @@
 node_modules
+.idea/*
+quizzes.json
+package-lock.json
