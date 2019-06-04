@@ -184,7 +184,6 @@ exports.playCmd = rl => {
     //log('Jugar.', 'red');
     //rl.prompt();
     let score = 0;
-    let isOK = true;
     const playOne = () => {
         let quiz = quizzes.pop();
         rl.question(colorize(`${quiz.question}: `, 'red'), answer => {
@@ -194,13 +193,16 @@ exports.playCmd = rl => {
                 if (quizzes.length > 0)
                     playOne();
                 else{
-                    log(`FINALIZO OK El resultado es ${score}.`);
+                    log(`No hay nada más que preguntar.`);
+                    log(`Fin del examen. Aciertos:`);
+                    biglog(`${score}`, "blue");
                     rl.prompt();
                 }
             } else {
-                biglog("INCORRECTO", "red");
-                isOK = false;
-                log(`FINALIZO NO OK El resultado es ${score}.`);
+                log("INCORRECTO.");
+                log(`Fin del examen. Aciertos:`);
+                biglog(`${score}`, "blue");
+
                 rl.prompt();
             }
 
