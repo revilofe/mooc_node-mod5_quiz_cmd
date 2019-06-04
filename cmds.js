@@ -181,8 +181,43 @@ exports.testCmd = (rl, id) => {
  * @param rl Objeto readline usado para implementar el CLI.
  */
 exports.playCmd = rl => {
-    log('Jugar.', 'red');
-    rl.prompt();
+    //log('Jugar.', 'red');
+    //rl.prompt();
+    let score = 0;
+    let isOK = true;
+    const playOne = () => {
+        let quiz = quizzes.pop();
+        rl.question(colorize(`${quiz.question}: `, 'red'), answer => {
+            if (answer.trim().toUpperCase() === quiz.answer.trim().toUpperCase()) {
+                score++;
+                log(`CORRECTO - Lleva ${score} aciertos.`, "green");
+                if (quizzes.length > 0)
+                    playOne();
+                else{
+                    log(`FINALIZO OK El resultado es ${score}.`);
+                    rl.prompt();
+                }
+            } else {
+                biglog("INCORRECTO", "red");
+                isOK = false;
+                log(`FINALIZO NO OK El resultado es ${score}.`);
+                rl.prompt();
+            }
+
+        })
+    };
+
+    const quizzes = model.getAll();
+    if (quizzes.length === 0) {
+        errorlog(`No hay preguntas.`);
+        rl.prompt();
+    } else {
+        quizzes.sort(() => (Math.random() - 0.5));
+        playOne();
+    }
+
+
+
 };
 
 
