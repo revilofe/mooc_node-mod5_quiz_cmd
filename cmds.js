@@ -181,8 +181,6 @@ exports.testCmd = (rl, id) => {
  * @param rl Objeto readline usado para implementar el CLI.
  */
 exports.playCmd = rl => {
-    //log('Jugar.', 'red');
-    //rl.prompt();
     let score = 0;
     const playOne = () => {
         let quiz = quizzes.pop();
@@ -196,6 +194,7 @@ exports.playCmd = rl => {
                     log(`No hay nada más que preguntar.`);
                     log(`Fin del examen. Aciertos:`);
                     biglog(`${score}`, "blue");
+
                     rl.prompt();
                 }
             } else {
@@ -212,6 +211,7 @@ exports.playCmd = rl => {
     const quizzes = model.getAll();
     if (quizzes.length === 0) {
         errorlog(`No hay preguntas.`);
+
         rl.prompt();
     } else {
         quizzes.sort(() => (Math.random() - 0.5));
